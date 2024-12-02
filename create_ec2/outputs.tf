@@ -16,3 +16,7 @@ output "subnet_id" {
   value = module.vpc.aws_subnet_id
 
 }
+
+output "security_group_id" {
+  value = module.vpc.security_group_id
+}

@@ -25,12 +25,13 @@ data "aws_ami" "amazon_ami" {
 
 }
 
-
-
 resource "aws_instance" "instance" {
   ami           = data.aws_ami.amazon_ami.id
   instance_type = var.instance_type
   subnet_id = var.subnet_id
+  key_name      = var.key_name
+  vpc_security_group_ids = [var.security_group_id]
+  
 
   tags = {
     Name = "amazon linux instance"
@@ -38,7 +39,14 @@ resource "aws_instance" "instance" {
   }
 }
 
+
 resource "aws_eip" "instance_ip" {
   instance = aws_instance.instance.id
   domain   = "vpc"
 }
+
+
+# resource "aws_key_pair" "keyname" {
+#   key_name   = var.keyname
+#   public_key = var.public_key
+# }

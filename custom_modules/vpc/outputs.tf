@@ -1,5 +1,5 @@
 output "vpc_id" {
-    value = aws_vpc.test
+    value = aws_vpc.test.id
 }
 
 output "aws_subnet_id" {
@@ -15,4 +15,9 @@ output "igw_id" {
 output "route_table_id" {
   
   value = aws_route_table.public_route_table.id
+}
+
+output "security_group_id" {
+    value = aws_security_group.allow_traffic.id
+  
 }
