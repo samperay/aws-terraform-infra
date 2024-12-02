@@ -1,0 +1,1 @@
+In this custom module, there are no HA available, instead this is a single AZ public zone for launching any test instance in this VPC.
