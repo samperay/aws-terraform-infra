@@ -16,11 +16,11 @@ resource "null_resource" "copy_install_script" {
     }
 
     provisioner "remote-exec" {
-      inline = [ "sudo chmod 777 /tmp/install.sh" ]
+      inline = [ "sudo chmod 777 /tmp/install.sh", "sudo /tmp/install.sh" ]
     }
 
-    provisioner "local-exec" {
-        command = "Display date and time of execution : `date`"
+  provisioner "local-exec" {
+      command = "echo hello >> hello.txt"
     }
 
 }

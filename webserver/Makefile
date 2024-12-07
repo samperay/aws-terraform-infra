@@ -17,11 +17,6 @@ plan:
 	terraform plan
 	@echo "resources for creation"
 
-
-apply:
-	terraform apply --auto-approve -var
-	@echo "applied terraform"
-
 clean:
 	rm -f *.tfstate
 	rm -f *.terraform
