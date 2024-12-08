@@ -11,13 +11,6 @@ variable "vpc_cidr_block" {
   default     = "10.0.0.0/16"
 }
 
-variable "vpc_availability_zones" {
-  description = "VPC Availability Zones"
-  type        = list(string)
-  default     = ["us-east-1a", "us-east-1b"]
-}
-
-
 variable "vpc_private_subnets" {
   description = "VPC Private Subnets"
   type        = list(string)

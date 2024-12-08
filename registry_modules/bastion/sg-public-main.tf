@@ -8,7 +8,7 @@ module "bastion-public-sg" {
   vpc_id      = module.vpc.vpc_id
 
   ingress_cidr_blocks = ["0.0.0.0/0"]
-  ingress_rules       = ["ssh-tcp"]
+  ingress_rules       = ["ssh-tcp", "http-80-tcp", "http-443-tcp"]
   egress_rules        = ["all-all"]
 
   tags = local.common_tags

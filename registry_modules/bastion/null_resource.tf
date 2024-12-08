@@ -14,10 +14,17 @@ resource "null_resource" "name" {
     source      = "./demo"
     destination = "/tmp/demo"
   }
+
+  provisioner "file" {
+    source      = "./install.sh"
+    destination = "/tmp/install.sh"
+  }
+
   ## Remote Exec Provisioner: Using remote-exec provisioner fix the private key permissions on Bastion Host
   provisioner "remote-exec" {
     inline = [
-      "sudo chmod 400 /tmp/demo"
+      "sudo chmod 400 /tmp/demo",
+      "sudo chmod 777 /tmp/install.sh",
     ]
   }
   ## Local Exec Provisioner:  local-exec provisioner (Creation-Time Provisioner - Triggered during Create Resource)
