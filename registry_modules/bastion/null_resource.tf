@@ -29,10 +29,9 @@ resource "null_resource" "name" {
   }
   ## Local Exec Provisioner:  local-exec provisioner (Creation-Time Provisioner - Triggered during Create Resource)
   provisioner "local-exec" {
-    command     = "echo VPC created on `date` and VPC ID: ${module.vpc.vpc_id} >> creation-time-vpc-id.txt"
+    command     = "echo VPC created on `date`>> create_vpc.txt"
     working_dir = "outputs/"
   }
-
 
 }
 
