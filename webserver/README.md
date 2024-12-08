@@ -4,5 +4,5 @@
 
 ## Resources created
 
-## architecture diagram
+## Architecture diagram
 
