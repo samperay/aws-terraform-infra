@@ -25,7 +25,7 @@ resource "aws_instance" "jenkins" {
   instance_type               = "t2.medium"
   subnet_id                   = aws_subnet.public-subnet.id
   vpc_security_group_ids      = [aws_security_group.jenkins-server-sg.id]
-  key_name                    = "demo"
+  key_name = "demo"
 
 
   root_block_device {
