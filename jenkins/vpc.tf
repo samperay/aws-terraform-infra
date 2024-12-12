@@ -1,46 +1,46 @@
 locals {
   common_tags = {
-    project = "project01"
+    project = "jenkins"
   }
 }
 
-resource "aws_vpc" "project01-vpc" {
+resource "aws_vpc" "jenkins-vpc" {
   cidr_block = "10.0.0.0/16"
   tags = merge(local.common_tags, {
-    Name = "project01-vpc"
+    Name = "jenkins-vpc"
   })
 }
 
 resource "aws_subnet" "public-subnet" {
-  vpc_id     = aws_vpc.project01-vpc.id
+  vpc_id     = aws_vpc.jenkins-vpc.id
   cidr_block = "10.0.0.0/24"
   tags = merge(local.common_tags, {
     Name = "public-subnet"
   })
 }
 
-resource "aws_internet_gateway" "project01-igw" {
-  vpc_id = aws_vpc.project01-vpc.id
+resource "aws_internet_gateway" "jenkins-igw" {
+  vpc_id = aws_vpc.jenkins-vpc.id
 
   tags = merge(local.common_tags, {
-    Name = "project01-igw"
+    Name = "jenkins-igw"
   })
 }
 
-resource "aws_route_table" "project01-rtb" {
-  vpc_id = aws_vpc.project01-vpc.id
+resource "aws_route_table" "jenkins-rtb" {
+  vpc_id = aws_vpc.jenkins-vpc.id
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.project01-igw.id
+    gateway_id = aws_internet_gateway.jenkins-igw.id
   }
 
   tags = merge(local.common_tags, {
-    Name = "project01-rtb"
+    Name = "jenkins-rtb"
   })
 }
 
 resource "aws_route_table_association" "public" {
   subnet_id      = aws_subnet.public-subnet.id
-  route_table_id = aws_route_table.project01-rtb.id
+  route_table_id = aws_route_table.jenkins-rtb.id
 }

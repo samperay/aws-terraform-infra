@@ -1,27 +1,46 @@
-resource "aws_security_group" "nginx-server-sg" {
-  description = "Security group allowing HTTP(port 80) and HTTPS(port 443)"
-  name        = "nginx-server-sg"
-  vpc_id      = aws_vpc.project01-vpc.id
-
-  # Allow inbound HTTP traffic on port 80
-  ingress {
-    from_port   = 8080
-    to_port     = 8080
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  # Allow all outbound traffic
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-
-  }
+resource "aws_security_group" "jenkins-server-sg" {
+  description = "jenkins-sg"
+  name        = "jenkins-server-sg"
+  vpc_id      = aws_vpc.jenkins-vpc.id
 
   tags = merge(local.common_tags, {
-    Name = "nginx-server-sg"
+    Name = "jenkins-server-sg"
   })
 
 }
+
+resource "aws_vpc_security_group_ingress_rule" "allow_jenkins_traffic" {
+  security_group_id = aws_security_group.jenkins-server-sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 8080
+  ip_protocol       = "tcp"
+  to_port           = 8080
+
+  tags = {
+    name = "allow_jenkins_traffic"
+  }
+}
+
+resource "aws_vpc_security_group_ingress_rule" "allow_ssh_traffic" {
+  security_group_id = aws_security_group.jenkins-server-sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 22
+  ip_protocol       = "tcp"
+  to_port           = 22
+
+  tags = {
+    name = "allow_ssh_traffic"
+  }
+}
+
+resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
+  security_group_id = aws_security_group.jenkins-server-sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1" # semantically equivalent to all ports
+
+
+  tags = merge(local.common_tags, {
+    Name = "jenkins-server-sg"
+  })
+}
+
